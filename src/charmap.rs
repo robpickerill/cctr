@@ -1,0 +1,54 @@
+use std::{collections::HashMap, error::Error, iter::zip};
+
+use crate::replacement::Class;
+
+pub struct CharMap {
+    map: HashMap<char, char>,
+}
+
+impl CharMap {
+    pub fn new(source: &str, dest: &str) -> Self {
+        let map = zip(
+            CharMap::process_input(&source).into_iter(),
+            CharMap::process_input(&dest).into_iter(),
+        )
+        .collect();
+
+        println!("map: {:?}", map);
+
+        Self { map }
+    }
+
+    fn process_input(input: &str) -> Vec<char> {
+        if let Ok(class) = CharMap::dervice_class(input) {
+            return class;
+        };
+
+        if let Ok(range) = CharMap::derive_range(input) {
+            return range;
+        };
+
+        input.chars().collect()
+    }
+
+    fn dervice_class(input: &str) -> Result<Vec<char>, Box<dyn Error>> {
+        let class = Class::try_from(input)?;
+        Ok(class.chars())
+    }
+
+    fn derive_range(input: &str) -> Result<Vec<char>, Box<dyn Error>> {
+        let chars = input.chars().collect::<Vec<_>>();
+
+        if chars.len() == 3 && chars[1] == '-' && chars[2] as u32 > chars[0] as u32 {
+            return Ok((chars[0]..=chars[2]).collect());
+        }
+
+        Err(Box::from(
+            format!("failed to parse: {} as a range", input).to_string(),
+        ))
+    }
+
+    pub fn get(&self, key: char) -> Option<&char> {
+        self.map.get(&key)
+    }
+}
