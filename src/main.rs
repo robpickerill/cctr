@@ -33,8 +33,6 @@ fn replace(args: args::Cli) {
 
     let input = read_input().unwrap();
     println!("{}", replacer.replace(&input));
-
-    println!("string1: {}", args.string1);
 }
 
 fn read_input() -> Result<String, Box<dyn Error>> {
