@@ -1,6 +1,6 @@
 use std::{collections::HashMap, error::Error, iter::zip};
 
-use crate::replacement::Class;
+use crate::classes::Class;
 
 pub struct CharMap {
     map: HashMap<char, char>,
@@ -8,13 +8,17 @@ pub struct CharMap {
 
 impl CharMap {
     pub fn new(source: &str, dest: &str) -> Self {
-        let map = zip(CharMap::process_input(source), CharMap::process_input(dest)).collect();
+        let map = zip(
+            CharMap::process_input(source).iter().cloned().cycle(),
+            CharMap::process_input(dest),
+        )
+        .collect();
 
         Self { map }
     }
 
     fn process_input(input: &str) -> Vec<char> {
-        if let Ok(class) = CharMap::dervice_class(input) {
+        if let Ok(class) = CharMap::derive_class(input) {
             return class;
         };
 
@@ -25,7 +29,7 @@ impl CharMap {
         input.chars().collect()
     }
 
-    fn dervice_class(input: &str) -> Result<Vec<char>, Box<dyn Error>> {
+    fn derive_class(input: &str) -> Result<Vec<char>, Box<dyn Error>> {
         let class = Class::try_from(input)?;
         Ok(class.chars())
     }

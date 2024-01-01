@@ -1,5 +1,6 @@
 mod args;
 mod charmap;
+mod classes;
 mod deletion;
 mod replacement;
 
