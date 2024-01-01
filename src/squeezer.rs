@@ -72,4 +72,38 @@ mod tests {
         assert_eq!(squeezer.squeeze("cbaaaaa"), "cba");
         assert_eq!(squeezer.squeeze("aaabccbaaa"), "abccba");
     }
+
+    #[test]
+    fn test_squeeze_range() {
+        let squeezer = Squeezer::new("a-z");
+
+        assert_eq!(squeezer.squeeze("aaaaabc"), "abc");
+        assert_eq!(squeezer.squeeze("cbaaaaa"), "cba");
+        assert_eq!(squeezer.squeeze("aaabccbaaa"), "abcba");
+    }
+
+    #[test]
+    fn test_squeeze_class() {
+        let squeezer = Squeezer::new(":lower:");
+
+        assert_eq!(squeezer.squeeze("aaaaabc"), "abc");
+        assert_eq!(squeezer.squeeze("cbaaaaa"), "cba");
+        assert_eq!(squeezer.squeeze("aaabccbaaa"), "abcba");
+    }
+
+    #[test]
+    fn test_squeeze_with_repeated_chars() {
+        let squeezer = Squeezer::new("aa");
+
+        assert_eq!(squeezer.squeeze("aa"), "a");
+        assert_eq!(squeezer.squeeze("aaaa"), "a");
+        assert_eq!(squeezer.squeeze("aaaaaa"), "a");
+    }
+
+    #[test]
+    fn test_squeeze_with_no_match() {
+        let squeezer = Squeezer::new("a");
+
+        assert_eq!(squeezer.squeeze("dddeeeffff"), "dddeeeffff");
+    }
 }
