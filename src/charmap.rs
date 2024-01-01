@@ -8,11 +8,7 @@ pub struct CharMap {
 
 impl CharMap {
     pub fn new(source: &str, dest: &str) -> Self {
-        let map = zip(
-            CharMap::process_input(&source).into_iter(),
-            CharMap::process_input(&dest).into_iter(),
-        )
-        .collect();
+        let map = zip(CharMap::process_input(source), CharMap::process_input(dest)).collect();
 
         println!("map: {:?}", map);
 

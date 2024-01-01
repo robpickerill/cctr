@@ -6,7 +6,7 @@ pub struct Replacer {
 
 impl Replacer {
     pub fn new(source: &str, dest: &str) -> Self {
-        let map = CharMap::new(&source, &dest);
+        let map = CharMap::new(source, dest);
 
         Self { map }
     }
