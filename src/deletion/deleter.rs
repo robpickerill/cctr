@@ -28,4 +28,22 @@ mod tests {
         assert_eq!(deleter.delete("cba"), "");
         assert_eq!(deleter.delete("abccba"), "");
     }
+
+    #[test]
+    fn test_delete_with_repeated_chars() {
+        let deleter = Deleter::new("aa");
+
+        assert_eq!(deleter.delete("aa"), "");
+        assert_eq!(deleter.delete("aaaa"), "");
+        assert_eq!(deleter.delete("aaaaaa"), "");
+    }
+
+    #[test]
+    fn test_delete_with_no_match() {
+        let deleter = Deleter::new("abc");
+
+        assert_eq!(deleter.delete("def"), "def");
+        assert_eq!(deleter.delete("fed"), "fed");
+        assert_eq!(deleter.delete("defabc"), "def");
+    }
 }
