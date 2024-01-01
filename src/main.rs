@@ -10,6 +10,13 @@ use crate::args::parse_validate_cli;
 use crate::deletion::Deleter;
 use crate::replacement::Replacer;
 
+/*
+TODO:
+ -c and -C : compliment chars
+ extend classes
+ -s : squeeze chars
+*/
+
 fn main() -> Result<(), Box<dyn Error>> {
     let args = parse_validate_cli()?;
 
